@@ -14,22 +14,23 @@
 <body>
   <script src="js/three.js"></script>
   <script src="js/dat.gui.min.js"></script>
+  <script src="js/trackball.controls.js"></script>
   <script src="js/orbit.controls.js"></script>
   <script>
     //   DAT GUI
-    const gui = new dat.GUI();
-    const world = {
-      cube: {
-        cubeWidth: 1,
-        cubeHeight: 1,
-        cubeDepth: 1,
-      },
-    };
+    // const gui = new dat.GUI();
+    // const world = {
+    //   cube: {
+    //     cubeWidth: 1,
+    //     cubeHeight: 1,
+    //     cubeDepth: 1,
+    //   },
+    // };
 
     //   Cube Functions
-    gui.add(world.cube, "cubeWidth", 0.1, 5).onChange(generateCube);
-    gui.add(world.cube, "cubeHeight", 0.1, 5).onChange(generateCube);
-    gui.add(world.cube, "cubeDepth", 0.1, 5).onChange(generateCube);
+    // gui.add(world.cube, "cubeWidth", 0.1, 5).onChange(generateCube);
+    // gui.add(world.cube, "cubeHeight", 0.1, 5).onChange(generateCube);
+    // gui.add(world.cube, "cubeDepth", 0.1, 5).onChange(generateCube);
 
     function generateCube() {
       cube.geometry.dispose();
@@ -55,14 +56,21 @@
     document.body.appendChild(renderer.domElement);
 
     // Orbit Controls
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.noZoom = true;
+    controls = new THREE.TrackballControls(camera, renderer.domElement);
+    // controls.noZoom = true;
 
     //   Cube Setup
     const geometryCube = new THREE.BoxGeometry();
     const materialCube = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometryCube, materialCube);
     scene.add(cube);
+
+    // wireframe
+    var geo = new THREE.EdgesGeometry(cube.geometry);
+    var mat = new THREE.LineBasicMaterial({ color: 0x00aa00, linewidth: 4 });
+    var wireframe = new THREE.LineSegments(geo, mat);
+    wireframe.renderOrder = 1; // make sure wireframes are rendered 2nd
+    cube.add(wireframe);
 
     //   Light 1
     const light1 = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -101,12 +109,12 @@
     function animate() {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
+      controls.update();
     }
     animate();
 
     addEventListener('wheel', (e) => {
       e.deltaY > 0 ? cube.rotation.y += 0.1 : cube.rotation.y -= 0.1;
-      console.log(e)
     })
   </script>
 </body>
