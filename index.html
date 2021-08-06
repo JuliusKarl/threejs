@@ -17,30 +17,12 @@
       //   DAT GUI
       const gui = new dat.GUI();
       const world = {
-        plane: {
-          planeWidth: 3,
-          planeHeight: 3,
-        },
         cube: {
           cubeWidth: 1,
           cubeHeight: 1,
           cubeDepth: 1,
         },
       };
-
-      //   Plane Functions
-      gui.add(world.plane, "planeWidth", 0.1, 5).onChange(generatePlane);
-      gui.add(world.plane, "planeHeight", 0.1, 5).onChange(generatePlane);
-
-      function generatePlane() {
-        plane.geometry.dispose();
-        plane.geometry = new THREE.PlaneGeometry(
-          world.plane.planeWidth,
-          world.plane.planeHeight,
-          10,
-          10
-        );
-      }
 
       //   Cube Functions
       gui.add(world.cube, "cubeWidth", 0.1, 5).onChange(generateCube);
@@ -79,16 +61,38 @@
       const cube = new THREE.Mesh(geometryCube, materialCube);
       scene.add(cube);
 
-      //   Plane Geometry
-      const geometryPlane = new THREE.PlaneGeometry(3, 3, 10, 10);
-      const materialPlane = new THREE.MeshPhongMaterial({ color: 0xff0000 });
-      const plane = new THREE.Mesh(geometryPlane, materialPlane);
-      scene.add(plane);
+      //   Light 1
+      const light1 = new THREE.DirectionalLight(0xffffff, 1.5);
+      light1.position.set(1, 0, 0);
+      scene.add(light1);
 
-      const light = new THREE.DirectionalLight(0xffffff, 1);
-      light.position.set(0, 0, 1);
-      scene.add(light);
-      camera.position.z = 5;
+      //   Light 2
+      const light2 = new THREE.DirectionalLight(0xffffff, 1.5);
+      light2.position.set(0, 1, 0);
+      scene.add(light2);
+
+      //   Light 3
+      const light3 = new THREE.DirectionalLight(0xffffff, 1.5);
+      light3.position.set(0, 0, 1);
+      scene.add(light3);
+
+      //   Light 4
+      const light4 = new THREE.DirectionalLight(0xffffff, 1.5);
+      light4.position.set(-1, 0, 0);
+      scene.add(light4);
+
+      //   Light 5
+      const light5 = new THREE.DirectionalLight(0xffffff, 1.5);
+      light5.position.set(0, -1, 0);
+      scene.add(light5);
+
+      //   Light 6
+      const light6 = new THREE.DirectionalLight(0xffffff, 1.5);
+      light6.position.set(0, 0, -1);
+      scene.add(light6);
+
+
+      camera.position.z = 10;
 
       //   Animations Setup
       function animate() {
@@ -96,9 +100,6 @@
 
         cube.rotation.x += 0.02;
         cube.rotation.y += 0.01;
-
-        plane.rotation.x -= 0.01;
-        plane.rotation.y -= 0.01;
 
         renderer.render(scene, camera);
       }
