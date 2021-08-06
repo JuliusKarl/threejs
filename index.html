@@ -1,109 +1,114 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>My first three.js app</title>
-    <style>
-      body {
-        margin: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <script src="js/three.js"></script>
-    <script src="js/dat.gui.min.js"></script>
-    <script src="js/orbit.controls.js"></script>
-    <script>
-      //   DAT GUI
-      const gui = new dat.GUI();
-      const world = {
-        cube: {
-          cubeWidth: 1,
-          cubeHeight: 1,
-          cubeDepth: 1,
-        },
-      };
 
-      //   Cube Functions
-      gui.add(world.cube, "cubeWidth", 0.1, 5).onChange(generateCube);
-      gui.add(world.cube, "cubeHeight", 0.1, 5).onChange(generateCube);
-      gui.add(world.cube, "cubeDepth", 0.1, 5).onChange(generateCube);
+<head>
+  <meta charset="utf-8" />
+  <title>My first three.js app</title>
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+</head>
 
-      function generateCube() {
-        cube.geometry.dispose();
-        cube.geometry = new THREE.BoxGeometry(
-          world.cube.cubeWidth,
-          world.cube.cubeHeight,
-          world.cube.cubeDepth
-        );
-      }
+<body>
+  <script src="js/three.js"></script>
+  <script src="js/dat.gui.min.js"></script>
+  <script src="js/orbit.controls.js"></script>
+  <script>
+    //   DAT GUI
+    const gui = new dat.GUI();
+    const world = {
+      cube: {
+        cubeWidth: 1,
+        cubeHeight: 1,
+        cubeDepth: 1,
+      },
+    };
 
-      //   Scene Setup
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        75,
-        innerWidth / innerHeight,
-        0.1,
-        1000
+    //   Cube Functions
+    gui.add(world.cube, "cubeWidth", 0.1, 5).onChange(generateCube);
+    gui.add(world.cube, "cubeHeight", 0.1, 5).onChange(generateCube);
+    gui.add(world.cube, "cubeDepth", 0.1, 5).onChange(generateCube);
+
+    function generateCube() {
+      cube.geometry.dispose();
+      cube.geometry = new THREE.BoxGeometry(
+        world.cube.cubeWidth,
+        world.cube.cubeHeight,
+        world.cube.cubeDepth
       );
+    }
 
-      const renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(devicePixelRatio);
-      document.body.appendChild(renderer.domElement);
+    //   Scene Setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      innerWidth / innerHeight,
+      0.1,
+      1000
+    );
 
-      // Orbit Controls
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(devicePixelRatio);
+    document.body.appendChild(renderer.domElement);
 
-      //   Cube Setup
-      const geometryCube = new THREE.BoxGeometry();
-      const materialCube = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
-      const cube = new THREE.Mesh(geometryCube, materialCube);
-      scene.add(cube);
+    // Orbit Controls
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.noZoom = true;
 
-      //   Light 1
-      const light1 = new THREE.DirectionalLight(0xffffff, 1.5);
-      light1.position.set(1, 0, 0);
-      scene.add(light1);
+    //   Cube Setup
+    const geometryCube = new THREE.BoxGeometry();
+    const materialCube = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+    const cube = new THREE.Mesh(geometryCube, materialCube);
+    scene.add(cube);
 
-      //   Light 2
-      const light2 = new THREE.DirectionalLight(0xffffff, 1.5);
-      light2.position.set(0, 1, 0);
-      scene.add(light2);
+    //   Light 1
+    const light1 = new THREE.DirectionalLight(0xffffff, 1.5);
+    light1.position.set(1, 0, 0);
+    scene.add(light1);
 
-      //   Light 3
-      const light3 = new THREE.DirectionalLight(0xffffff, 1.5);
-      light3.position.set(0, 0, 1);
-      scene.add(light3);
+    //   Light 2
+    const light2 = new THREE.DirectionalLight(0xffffff, 1.5);
+    light2.position.set(0, 1, 0);
+    scene.add(light2);
 
-      //   Light 4
-      const light4 = new THREE.DirectionalLight(0xffffff, 1.5);
-      light4.position.set(-1, 0, 0);
-      scene.add(light4);
+    //   Light 3
+    const light3 = new THREE.DirectionalLight(0xffffff, 1.5);
+    light3.position.set(0, 0, 1);
+    scene.add(light3);
 
-      //   Light 5
-      const light5 = new THREE.DirectionalLight(0xffffff, 1.5);
-      light5.position.set(0, -1, 0);
-      scene.add(light5);
+    //   Light 4
+    const light4 = new THREE.DirectionalLight(0xffffff, 1.5);
+    light4.position.set(-1, 0, 0);
+    scene.add(light4);
 
-      //   Light 6
-      const light6 = new THREE.DirectionalLight(0xffffff, 1.5);
-      light6.position.set(0, 0, -1);
-      scene.add(light6);
+    //   Light 5
+    const light5 = new THREE.DirectionalLight(0xffffff, 1.5);
+    light5.position.set(0, -1, 0);
+    scene.add(light5);
+
+    //   Light 6
+    const light6 = new THREE.DirectionalLight(0xffffff, 1.5);
+    light6.position.set(0, 0, -1);
+    scene.add(light6);
 
 
-      camera.position.z = 10;
+    camera.position.z = 10;
 
-      //   Animations Setup
-      function animate() {
-        requestAnimationFrame(animate);
+    //   Animations Setup
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
 
-        cube.rotation.x += 0.02;
-        cube.rotation.y += 0.01;
+    addEventListener('wheel', (e) => {
+      e.deltaY > 0 ? cube.rotation.y += 0.1 : cube.rotation.y -= 0.1;
+      console.log(e)
+    })
+  </script>
+</body>
 
-        renderer.render(scene, camera);
-      }
-      animate();
-    </script>
-  </body>
 </html>
