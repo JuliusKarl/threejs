@@ -12,8 +12,8 @@
   <body>
     <script src="js/three.js"></script>
     <script src="js/dat.gui.min.js"></script>
+    <script src="js/orbit.controls.js"></script>
     <script>
-        
       //   DAT GUI
       const gui = new dat.GUI();
       const world = {
@@ -69,6 +69,9 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(devicePixelRatio);
       document.body.appendChild(renderer.domElement);
+
+      // Orbit Controls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
 
       //   Cube Setup
       const geometryCube = new THREE.BoxGeometry();
